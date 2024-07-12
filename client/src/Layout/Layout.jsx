@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 function Layout() {
     return (
-        <div className='bg-gray-900 h-full min-h-screen'>
+        <div className='bg-gray-900 h-fit'>
             <Navbar/>
             <Outlet/>
         </div>

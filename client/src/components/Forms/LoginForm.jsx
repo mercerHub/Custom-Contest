@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { server } from '../../constants';
+import { server } from '../../constants.js';
 import useAuth  from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,15 @@ function LoginForm() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${server}/user/login`, { username:usernameInput, password:passwordInput });
+            const response = await axios.post(`${server}/user/login`, 
+                { 
+                    username:usernameInput,
+                    password:passwordInput 
+                },
+                { 
+                    withCredentials: true
+                });
+                
             const {_id, name, email, username, problems, contests } = response.data.data.loggedInUser;
             console.log(response.data.data.loggedInUser);
             login({ _id, name, email, username, problems, contests });

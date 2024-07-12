@@ -1,14 +1,11 @@
 // src/App.jsx
-import React from 'react';
-import { useState } from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout/Layout';
 import Home from './components/Routes/Home';
 import Login from './components/Routes/Login';
 import { AuthContextProvider } from './contexts/UserContext';
+import Register from './components/Routes/Register';
 
 const router = createBrowserRouter([
   {
@@ -25,24 +22,45 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />,
   },
+  {
+    path: '/register',
+    element: <Register />,
+  },
 ]);
 
 const App = () => {
-    const [user,setUser] = useState('');
-    const login = (user) => {
-        localStorage.setItem('user',JSON.stringify(user));
-        setUser(user);
+  const [user, setUser] = useState(null);
+  const codecacheKeyInLocal = 'codecacheKeyInLocal';
+
+  useEffect(() => {
+    const userFromLocal = JSON.parse(localStorage.getItem(codecacheKeyInLocal));
+    if (userFromLocal) {
+      setUser(userFromLocal);
     }
-    const logout = () => {
-        localStorage.removeItem('user');
-        setUser('');
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(codecacheKeyInLocal, JSON.stringify(user));
     }
-    const register = (user) => {
-        setUser(user);
-    }
+  }, [user]);
+
+  const login = (user) => {
+    localStorage.setItem(codecacheKeyInLocal, JSON.stringify(user));
+    setUser(user);
+  };
+
+  const logout = () => {
+    localStorage.removeItem(codecacheKeyInLocal);
+    setUser(null);
+  };
+
+  const register = (user) => {
+    setUser(user);
+  };
 
   return (
-    <AuthContextProvider value={{user,login,logout,register}}>
+    <AuthContextProvider value={{ user, login, logout, register }}>
       <RouterProvider router={router} />
     </AuthContextProvider>
   );

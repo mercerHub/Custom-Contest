@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: logoText;
+  src: url('./fonts/Fustat-VariableFont_wght.ttf');
+}
+
+.logoText {
+  font-family: logoText;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+}
+.logoText-notLogo{
+  font-family: logoText;
+  text-shadow: 2px 2px 4px #4e4d4d;
+}

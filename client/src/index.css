@@ -6,7 +6,37 @@
   font-family: logoText;
   src: url('./fonts/Fustat-VariableFont_wght.ttf');
 }
+@font-face {
+  font-family: la-solid;
+  src: url('./fonts/la-solid-900.ttf');
+}
+@font-face {
+  font-family: MathJax_Main;
+  src: url('./fonts/MathJax_Main-Regular.ttf');
+}
+@font-face {
+  font-family: MathJax_Math;
+  src: url('./fonts/MathJax_Math-Italic.ttf');
+}
+@font-face {
+  font-family: MathJax_Caligraphic;
+  src: url('./fonts/MathJax_Size1-Regular.ttf');
+}
 
+@font-face {
+  font-family: CodeForcesFont1;
+  src: url('./fonts/pxiEyp8kv8JHgFVrJJfecg.ttf');
+}
+@font-face {
+  font-family: CodeForcesFont2;
+  src: url('./fonts/BngSUXNadjH0qYEzV7ab-oWlsbg95AiFW_0.ttf');
+}
+.sub{
+  vertical-align: sub;
+}
+.sup{
+  vertical-align: super;
+}
 .logoText {
   font-family: logoText;
   text-shadow: 2px 2px 4px #4e4d4d;
@@ -15,9 +45,45 @@
 .logoText-notLogo{
   font-family: logoText;
   text-shadow: 2px 2px 4px #4e4d4d;
-<<<<<<< HEAD
+}
+.codeForcesFont1 {
+  font-family: CodeForcesFont1;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+}
+.codeForcesFont2 {
+  font-family: CodeForcesFont2;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+
+}
+.la-solid {
+  font-family: la-solid;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
 }
 
+.MathJax_Main {
+  font-family: MathJax_Main;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+}
+
+.MathJax_math {
+  font-family: MathJax_Math;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+}
+.MathJax_caligraphic {
+  font-family: MathJax_Caligraphic;
+  text-shadow: 2px 2px 4px #4e4d4d;
+  font-weight: 200;
+}
+body {
+  font-family: MabthJax_Main;
+  background-color: #f7f7f7;
+  color: #333;
+}
 .invisible{
   opacity: 0;
 }
@@ -33,6 +99,3 @@
 .mouse-tracker.make-visible {
   opacity: 1; /* Visible */
 }
-=======
-}
->>>>>>> 8e07386 (Initial commit)

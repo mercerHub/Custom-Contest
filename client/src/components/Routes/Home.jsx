@@ -1,43 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import  useAuth from '../../contexts/UserContext';
-<<<<<<< HEAD
 import MouseTrackerComponent from '../FancyComponents/MouseTrackerComponent';
 import Card from '../FancyComponents/Card';
-import { Button } from '@mui/material';
 import { SiCodeforces } from "react-icons/si";
+import { SiCodechef } from "react-icons/si";
 
 
 function Home() {
     const { user } = useAuth();
 
     return (
-        <div className='text-white h-dvh home-area p-2 flex flex-col items-center'>
-            {user?.problems[0] ? <h1>Welcome ka !!</h1> : <h1>Welcome to CodeCache</h1>}
-            <Card icon = {<SiCodeforces />} text = "Problems"/>
+        <div className='text-white h-dvh home-area p-2 flex flex-col items-center gap-5 mt-4'>
+            <h1 className='text-3xl logoText-notLogo'>Welcome, {user? user?.name : "to CodeCache"} !!!</h1>
+            <div className='h-full w-full flex gap-4 p-4 justify-center flex-col sm:flex-row sm:items-start items-center flex-wrap select-none'>
+                <Card icon = {<SiCodeforces />} text = "Problems"/>
+                <Card icon = {<SiCodechef />} text = "Contests"/>
+            </div>
         </div>  
-=======
-
-function Home() {
-    const { user } = useAuth();
-    console.log(user);
-    const [username, setUsername] = useState(user?.name || '');
-
-    useEffect(() => {
-        console.log(user);
-        if(user){
-            setUsername(user.name);
-        }
-        else{
-            setUsername('');
-        }
-    },[user])
-
-    return (
-        <div className='text-white'>
-            {username ? <h1>Welcome {username} !!</h1> : <h1>Welcome to CodeCache</h1>}
-        </div>
-        
->>>>>>> 8e07386 (Initial commit)
     )
 }
 

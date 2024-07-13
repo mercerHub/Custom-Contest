@@ -15,6 +15,7 @@
 .logoText-notLogo{
   font-family: logoText;
   text-shadow: 2px 2px 4px #4e4d4d;
+<<<<<<< HEAD
 }
 
 .invisible{
@@ -32,3 +33,6 @@
 .mouse-tracker.make-visible {
   opacity: 1; /* Visible */
 }
+=======
+}
+>>>>>>> 8e07386 (Initial commit)

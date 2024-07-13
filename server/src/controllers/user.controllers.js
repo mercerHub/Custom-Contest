@@ -31,7 +31,11 @@ const registerUser = asyncHandler(async (req, res) => {
     const existsUser = await User.findOne({ $or: [{ username }, { email }] });
 
     if (existsUser) {
+<<<<<<< HEAD
         throw new ApiError(409, "User already exists");
+=======
+        throw new ApiError(400, "User already exists");
+>>>>>>> 8e07386 (Initial commit)
     }
 
     const user = await User.create({
@@ -45,7 +49,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (!createdUser) throw new ApiError(500, "User not created");
 
+<<<<<<< HEAD
     res.status(201).json(new ApiResponse(201, createdUser,"User created successfully"));
+=======
+    res.status(201).json(new ApiResponse(201, "User created successfully", createdUser));
+>>>>>>> 8e07386 (Initial commit)
 });
 
 const loginUser = asyncHandler(async (req, res) => {

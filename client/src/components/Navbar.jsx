@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import useAuth from '../contexts/UserContext';
 import axios from 'axios';
@@ -16,19 +16,25 @@ function Navbar() {
             });
             console.log(response.data);
             logout();
+            
         } catch (error) {
+            logout();
             console.error('Logout error:', error.response ? error.response.data : error.message);
         }
     };
 
     useEffect(() => {
+
         setIsUserLoggedIn(user ? true : false);
+        console.log(user);
     }, [user]);
 
     return (
         <div className='bg-black flex h-16 items-center px-10 py-2 justify-between border border-l-0 border-r-0 border-b-1 border-sky-200'>
             <div className='logoText select-none'>
-                <h1 className='text-white text-xl md:text-3xl '>&lt;CodeCache&gt;</h1>
+                <Link 
+                to={'/'}
+                className='text-white text-xl md:text-3xl '>&lt;CodeCache&gt;</Link>
             </div>
             {!isUserLoggedIn ? (
                 <div className='flex items-center gap-5'>

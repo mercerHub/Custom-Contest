@@ -5,8 +5,15 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const fetchProblemsController = async (req, res) => {
     const url = req.query.url;
-    const contestId = url.split("/")[url.split("/").length - 3];
-    const problemIndex = url.split("/")[url.split("/").length - 1];
+    const contestId = url?.split("/")[url?.split("/").length - 3];
+    const problemIndex = url?.split("/")[url?.split("/").length - 1];
+    const {problemId} = req.body;
+    if(problemId){
+        const problem = await Problems.findById(problemId);
+        if(!problem){ new ApiResponse(404, null, "Problem not found!!") }
+        return res.status(200)
+            .json(new ApiResponse(200, problem, "Problem sent to client!!"));
+    }
     try {
         const problem = await Problems.findOne({ url });
         if (!problem) {

@@ -6,6 +6,10 @@ import Home from './components/Routes/Home';
 import Login from './components/Routes/Login';
 import { AuthContextProvider } from './contexts/UserContext';
 import Register from './components/Routes/Register';
+import Problems from './components/Routes/Problems';
+import Problem from './components/Routes/Problem';
+import { CurrentProblemProvider } from './contexts/CurrentProblemContext.jsx';
+import Contests from './components/Routes/Contests.jsx';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +20,20 @@ const router = createBrowserRouter([
         path: '',
         element: <Home />,
       },
+      {
+        path: 'problems',
+        element: <Problems/>,
+        children:[
+          {
+            path:'/problems/:problemId',
+            element:<Problem/>
+          }
+        ]
+      },
+      {
+        path: 'contests',
+        element: <Contests/>
+      }
     ],
   },
   {
@@ -52,6 +70,9 @@ const App = () => {
 
   const logout = () => {
     localStorage.removeItem(codecacheKeyInLocal);
+    if(localStorage.getItem("currentProblem")) {
+      localStorage.removeItem("currentProblem");
+    }
     setUser(null);
   };
 
@@ -61,7 +82,9 @@ const App = () => {
 
   return (
     <AuthContextProvider value={{ user, login, logout, register }}>
-      <RouterProvider router={router} />
+      <CurrentProblemProvider>
+        <RouterProvider router={router} />
+      </CurrentProblemProvider>
     </AuthContextProvider>
   );
 };

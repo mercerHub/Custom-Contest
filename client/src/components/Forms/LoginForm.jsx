@@ -3,7 +3,7 @@ import axios from 'axios';
 import { server } from '../../constants.js';
 import useAuth  from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 
 
 function LoginForm() {
@@ -40,7 +40,7 @@ function LoginForm() {
             {/* component */}
             <div className="bg-black text-white flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
                 <div className="text-foreground font-semibold text-4xl tracking-tighter mx-auto flex items-center gap-2 logoText-notlogo">
-                    <span> &lt;CodeCache&gt;</span>
+                    <Link to = "/"> &lt;CodeCache&gt;</Link>
                 </div>
                 <div className="relative mt-12 w-full max-w-lg sm:mt-10">
                     <div className="relative -mb-px h-px w-full bg-gradient-to-r from-transparent via-sky-300 to-transparent"></div>

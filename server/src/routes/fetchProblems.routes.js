@@ -4,6 +4,7 @@ import { verifyJWT } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-router.route("/fetchProblems").get(verifyJWT,fetchProblemsController);
+router.route("/fetchProblems").post(verifyJWT,fetchProblemsController);
+
 
 export default router;

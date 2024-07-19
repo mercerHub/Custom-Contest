@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createContest } from "../controllers/contest.controllers.js";
+import { createContest , getContest} from "../controllers/contest.controllers.js";
 import { verifyJWT } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-router.route("/createContest").get(verifyJWT,createContest);
+router.route("/createContest").post(verifyJWT,createContest);
+router.route("/getContest").post(verifyJWT,getContest);
 
 export default router;

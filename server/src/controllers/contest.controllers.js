@@ -85,10 +85,32 @@ const createContest = asyncHandler(async (req, res) => {
     console.log(searchContestInDb);
     res
     .status(201)
-    .json(new ApiResponse(201,"Contest created successfully",searchContestInDb));
+    .json(new ApiResponse(201,searchContestInDb,"Contest created successfully"));
     
 });
 
+const getContest = asyncHandler(async(req,res) => {
+    const {contest_id} = req.body;
+
+    if(!contest_id){
+        throw new ApiError(404,"Contest id required");
+    }
+
+    const fetchedContests = await Contest.findById(contest_id);
+
+    if(!fetchedContests){
+        new ApiError(404,"No contests found with such id");
+    }
+
+    console.log(fetchedContests);
+
+    res
+    .status(200)
+    .json(new ApiResponse(200,fetchedContests,"Contest Fetched Successfully"))
+
+})
+
 export {
     createContest,
+    getContest
 } 

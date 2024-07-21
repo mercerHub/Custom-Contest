@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import { Contest } from "../models/contest.model.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
     try {
@@ -156,9 +157,57 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 })
 
+const removeContest = asyncHandler(async (req,res) => {
+    if(!req.user){
+        throw new ApiError(401,"No user found : remove contest");
+    }
+
+    const {contestId} = req.body;
+
+    const user = await User.findById(req.user._id);
+    const contestInDb = await Contest.find({contestId: contestId});
+
+    if(!user || !contestInDb) new ApiError(404,"No such user or contest found !!");
+
+    const contestListOfUser = user.contests;
+
+    const updatedContestListOfUser = contestListOfUser.filter((contestIdsOfUser) => {
+        console.log(`${contestIdsOfUser.toString()} ${(contestInDb[0]._id).toString()}`)
+        return contestIdsOfUser.toString() !== (contestInDb[0]._id).toString()
+    })
+    
+
+    console.log(updatedContestListOfUser);
+    
+    const userToUpdate = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {
+                contests:updatedContestListOfUser
+            }
+        },
+        {
+            new: true
+        }
+    )
+    const finalSave = await userToUpdate.save();
+
+    if(!finalSave){
+        throw new ApiError(409,"Couldn't save updated contest list in DB")
+    }
+    
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200,contestInDb[0],"Contest list updated succesfully !!")
+    )
+    
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    removeContest
 };

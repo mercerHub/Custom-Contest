@@ -6,11 +6,13 @@ import ContestHeader from "./ContestHeader";
 import { Triangle } from "react-loader-spinner";
 import AddContestForm from "../Forms/AddContestForm";
 import RemoveContestForm from "../Forms/RemoveContestForm";
+import { useNavigate } from "react-router-dom";
 
 function Contests() {
   const { user } = useAuth();
   const [contests, setContests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchContests = async () => {
       if (user && Array.isArray(user.contests) && user.contests.length > 0) {
@@ -36,12 +38,16 @@ function Contests() {
           console.log("Couldn't fetch contests !!", error);
         }
       }
+      else {
+        setContests([]);
+      }
     };
 
     fetchContests();
   }, [user]);
 
   return (
+    user ? 
     <div className="flex gap-2">
       <div className="bg-black my-5 mx-8 rounded-xl h-[85vh] w-3/5 flex items-center justify-center flex-col gap-5 p-5">
         <div
@@ -77,7 +83,7 @@ function Contests() {
           <RemoveContestForm/>
         </div>
       </div>
-    </div>
+    </div>:(navigate('/'))
   );
 }
 

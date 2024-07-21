@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout/Layout';
@@ -10,6 +9,7 @@ import Problems from './components/Routes/Problems';
 import Problem from './components/Routes/Problem';
 import { CurrentProblemProvider } from './contexts/CurrentProblemContext.jsx';
 import Contests from './components/Routes/Contests.jsx';
+import ContestProblems from './components/Routes/ContestProblems.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,17 +22,29 @@ const router = createBrowserRouter([
       },
       {
         path: 'problems',
-        element: <Problems/>,
-        children:[
+        element: <Problems />,
+        children: [
           {
-            path:'/problems/:problemId',
-            element:<Problem/>
-          }
-        ]
+            path: ':problemId',
+            element: <Problem />,
+          },
+        ],
       },
       {
         path: 'contests',
-        element: <Contests/>
+        element: <Contests />,
+        children: [],
+      },
+      {
+        path: 'contests/:id',
+        element: <ContestProblems />,
+        children:[
+          {
+            path:':problemId',
+            element: <Problem/>
+          }
+
+        ]
       }
     ],
   },
@@ -48,6 +60,7 @@ const router = createBrowserRouter([
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [contests, setContests] = useState(user?.contests || []);
   const codecacheKeyInLocal = 'codecacheKeyInLocal';
 
   useEffect(() => {
@@ -60,6 +73,9 @@ const App = () => {
   useEffect(() => {
     if (user) {
       localStorage.setItem(codecacheKeyInLocal, JSON.stringify(user));
+      setContests(user.contests);
+    } else {
+      setContests([]);
     }
   }, [user]);
 
@@ -70,8 +86,8 @@ const App = () => {
 
   const logout = () => {
     localStorage.removeItem(codecacheKeyInLocal);
-    if(localStorage.getItem("currentProblem")) {
-      localStorage.removeItem("currentProblem");
+    if (localStorage.getItem('currentProblem')) {
+      localStorage.removeItem('currentProblem');
     }
     setUser(null);
   };
@@ -80,8 +96,20 @@ const App = () => {
     setUser(user);
   };
 
+  const addContest = (contestData) => {
+    const updatedContests = [...contests, contestData];
+    setContests(updatedContests);
+    setUser({ ...user, contests: updatedContests });
+  };
+
+  const removeContest = (contestData) => {
+    const updatedContests = contests.filter((contest) => contest.toString() !== contestData.toString());
+    setContests(updatedContests);
+    setUser({ ...user, contests: updatedContests });
+  };
+
   return (
-    <AuthContextProvider value={{ user, login, logout, register }}>
+    <AuthContextProvider value={{ user, login, logout, register, addContest, removeContest }}>
       <CurrentProblemProvider>
         <RouterProvider router={router} />
       </CurrentProblemProvider>

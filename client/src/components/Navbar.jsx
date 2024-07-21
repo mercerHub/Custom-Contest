@@ -9,6 +9,7 @@ function Navbar() {
     const { user, logout } = useAuth();
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(user ? true : false);
 
+
     const handleLogout = async () => {
         try {
             const response = await axios.post(`${server}/user/logout`, {}, {

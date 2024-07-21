@@ -18,7 +18,7 @@ function Problem() {
     const ParsedStatement = currentProblemData ? problemParserCF(currentProblemData.statement) : null;
 
     return (
-        currentProblemData ? (
+        currentProblem ? (
             <div 
                 className='bg-slate-200 max-h-[90vh] border w-2/3 rounded-xl m-3 problem-statement p-6 overflow-auto scrollbar-custom2'
                 dangerouslySetInnerHTML={{ __html: ParsedStatement }}

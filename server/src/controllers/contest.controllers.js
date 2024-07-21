@@ -48,7 +48,9 @@ const contestData = async (contestId) => {
 
 
 const createContest = asyncHandler(async (req, res) => {
-    const {url, contestId} = req.body;
+    var {url, contestId} = req.body;
+    var alreadyInUser = true;
+
     if(!contestId && !url){
         throw new ApiError(400,"contestId or url is required");
     }
@@ -70,6 +72,7 @@ const createContest = asyncHandler(async (req, res) => {
     }
 
     if(!req.user.contests.includes(searchContestInDb._id)) {
+        alreadyInUser = false
         req.user.contests.push(searchContestInDb._id);
         await req.user.save({validateBeforeSave:false});
     }
@@ -84,8 +87,8 @@ const createContest = asyncHandler(async (req, res) => {
 
     console.log(searchContestInDb);
     res
-    .status(201)
-    .json(new ApiResponse(201,searchContestInDb,"Contest created successfully"));
+    .status(alreadyInUser ? 202 : 200)
+    .json(new ApiResponse(alreadyInUser ? 202:200,searchContestInDb,"Contest created successfully"));
     
 });
 

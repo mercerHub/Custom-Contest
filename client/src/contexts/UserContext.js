@@ -11,7 +11,9 @@ const authContext = createContext({
     },
     login: (user) => {},
     register: (user) => {},
-    logout: () => {}
+    logout: () => {},
+    addContest:(contestData) => {},
+    removeContest : (contestData) => {}
 });
 
 export default function useAuth() {

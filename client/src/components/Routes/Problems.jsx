@@ -4,7 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../constants';
 import ProblemCard from '../FancyComponents/ProblemCard';
-import { DNA } from 'react-loader-spinner';
+import { Triangle } from 'react-loader-spinner';
 import { useCurrentProblem } from '../../contexts/CurrentProblemContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -62,7 +62,7 @@ function Problems() {
                     </h1>
                 <div className={`overflow-y-auto flex gap-4 flex-col scrollbar-custom ${loading ? "justify-center items-center": ""}`}>
                     {loading ? (
-                        <DNA/>
+                        <Triangle color='cyan' height={100}/>
                     ) : (
                         problems.map((problem) => (
                             <Link key={problem._id}

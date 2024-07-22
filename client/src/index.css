@@ -95,7 +95,6 @@ super{
 }
 .logoText-notLogo{
   font-family: logoText;
-  text-shadow: 2px 2px 4px #4e4d4d;
 }
 .codeForcesFont1 {
   font-family: CodeForcesFont1;

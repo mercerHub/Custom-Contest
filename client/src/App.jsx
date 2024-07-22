@@ -10,6 +10,12 @@ import Problem from './components/Routes/Problem';
 import { CurrentProblemProvider } from './contexts/CurrentProblemContext.jsx';
 import Contests from './components/Routes/Contests.jsx';
 import ContestProblems from './components/Routes/ContestProblems.jsx';
+import SolutionComponent from './components/Solution/SolutionComponent.jsx';
+import 'highlight.js/styles/github.css';
+import SolutionForm from './components/Forms/SolutionForm.jsx';
+import DisplaySolution from './components/Solution/DisplaySolution.jsx';
+import { CurrentSolutionProvider } from './contexts/CurrentSolutionContext.jsx';
+import RenderSolution from './components/Solution/RenderSolution.jsx';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +51,20 @@ const router = createBrowserRouter([
           }
 
         ]
+      },
+      {
+        path:'problem/solution/:problemId',
+        element:<SolutionForm/>
+      },
+      {
+        path:'problem/getSolution/:problemId',
+        element:<DisplaySolution/>,
+        children:[
+          {
+            path:':solutionId',
+            element:<RenderSolution/>
+          }
+        ]
       }
     ],
   },
@@ -56,6 +76,7 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register />,
   },
+  
 ]);
 
 const App = () => {
@@ -111,7 +132,9 @@ const App = () => {
   return (
     <AuthContextProvider value={{ user, login, logout, register, addContest, removeContest }}>
       <CurrentProblemProvider>
-        <RouterProvider router={router} />
+        <CurrentSolutionProvider>
+          <RouterProvider router={router} />
+        </CurrentSolutionProvider>
       </CurrentProblemProvider>
     </AuthContextProvider>
   );

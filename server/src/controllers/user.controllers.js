@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { Contest } from "../models/contest.model.js";
+import {Solutions } from "../models/solution.model.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
     try {
@@ -204,10 +205,66 @@ const removeContest = asyncHandler(async (req,res) => {
     
 })
 
+const addSolution = asyncHandler(async(req,res) => {
+    const {problemId,userId,solutionData} = req.body;
+    const {code,explanation,plan,analysis} = solutionData;
+
+    if(!problemId || !userId) throw new ApiError(405,"Problem id or user id missing !!");
+
+    const createSolution = await Solutions.create(
+        {
+            userId,
+            problemId,
+            solutionData:{
+                code,
+                explanation,
+                plan,
+                analysis
+            }
+        }
+    )
+
+    if(!createSolution) throw new ApiError(401,"Couldn't create solution");
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,{createSolution},"Solution Created Successfully !!"));
+})
+
+const removeSolution = asyncHandler(async(req,res) => {
+    const {solutionId} = req.body;
+
+    if(!solutionId) throw new ApiError(404,"Solution id missing in request");
+
+    const deleted = await Solutions.findByIdAndDelete(solutionId);
+
+    if(!deleted) throw new ApiError(404,"Couldn't delete solution");
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,deleted,"Solution deleted successfully !!"))
+})
+
+const getSolutions = asyncHandler(async(req,res) => {
+    const {problemId,userId} = req.body;
+
+    if(!problemId || !userId) throw new ApiError(404,"Problem id or user id missing in request");
+
+    const solution = await Solutions.find({problemId,userId});
+    if(!solution) throw new ApiError(404,"No solution found");
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,solution,"Solution fetched successfully !!"))
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
     refreshAccessToken,
-    removeContest
+    removeContest,
+    addSolution,
+    removeSolution,
+    getSolutions
 };
